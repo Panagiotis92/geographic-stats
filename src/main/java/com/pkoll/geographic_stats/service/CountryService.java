@@ -1,6 +1,6 @@
 package com.pkoll.geographic_stats.service;
 
-import com.pkoll.geographic_stats.persistence.projection.CountrySummaryProjection;
+import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
 import com.pkoll.geographic_stats.persistence.repository.CountryLanguageRepository;
 import com.pkoll.geographic_stats.persistence.repository.CountryRepository;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class CountryService {
         this.countryLanguageRepository = countryLanguageRepository;
     }
 
-    public List<CountrySummaryProjection> getAllCountries() {
-        return countryRepository.findAllBy();
+    public List<CountrySummaryDTO> getAllCountries() {
+        return countryRepository.findAllByOrderByNameAsc();
     }
 
     public List<String> getCountryLanguages(String countryCode2) {

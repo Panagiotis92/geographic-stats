@@ -1,10 +1,12 @@
 package com.pkoll.geographic_stats.endpoint;
 
-import com.pkoll.geographic_stats.persistence.projection.CountrySummaryProjection;
+import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
 import com.pkoll.geographic_stats.service.CountryService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class CountryEndpoint {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CountrySummaryProjection> getAllCountries() {
+    public List<CountrySummaryDTO> getAllCountries() {
         return countryService.getAllCountries();
     }
 
