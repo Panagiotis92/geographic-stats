@@ -22,13 +22,13 @@ public class CountryEndpoint {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CountrySummaryDTO> getAllCountries() {
-        return countryService.getAllCountries();
+    public List<CountrySummaryDTO> getAll() {
+        return countryService.getAll();
     }
 
     @GetMapping(value = "{countryCode2:[A-Z]{2}}/languages", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> getCountryLanguages(@PathVariable String countryCode2) {
-        return countryService.getCountryLanguages(countryCode2);
+    public List<String> getLanguages(@PathVariable String countryCode2) {
+        return countryService.getLanguages(countryCode2);
     }
 
     @GetMapping(value = "most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)

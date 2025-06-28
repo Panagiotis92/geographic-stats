@@ -25,13 +25,13 @@ public class CountryService {
     }
 
     @Transactional
-    public List<CountrySummaryDTO> getAllCountries() {
-        return countryRepository.findAllByOrderByNameAsc();
+    public List<CountrySummaryDTO> getAll() {
+        return countryRepository.selectSummaryOrderByNameAsc();
     }
 
     @Transactional
-    public List<String> getCountryLanguages(String countryCode2) {
-        return countryLanguageRepository.findLanguagesByCountryCode2(countryCode2);
+    public List<String> getLanguages(String countryCode2) {
+        return countryLanguageRepository.selectLanguagesByCountryCode2(countryCode2);
     }
 
     @Transactional
