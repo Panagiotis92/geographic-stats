@@ -2,7 +2,6 @@ package com.pkoll.geographic_stats.service;
 
 import com.pkoll.geographic_stats.dto.CountryProductivityDTO;
 import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
-import com.pkoll.geographic_stats.persistence.CountryStat;
 import com.pkoll.geographic_stats.persistence.repository.CountryLanguageRepository;
 import com.pkoll.geographic_stats.persistence.repository.CountryRepository;
 import com.pkoll.geographic_stats.persistence.repository.CountryStatsRepository;
@@ -36,13 +35,13 @@ public class CountryService {
 
     @Transactional
     public Collection<CountryProductivityDTO> findMostProductiveYears() {
-        return countryStatsRepository.findAll()
+        return countryStatsRepository.selectCountryYearStats()
                 .stream()
                 .collect(Collectors.groupingBy(
-                        countryStat -> countryStat.getCountry().getCountryCode3(),
+                        CountryProductivityDTO::countryCode3,
                         Collectors.collectingAndThen(
-                                Collectors.maxBy(Comparator.comparingDouble(CountryStat::getGdpPopulationRation)),
-                                mostProductiveYear -> new CountryProductivityDTO(mostProductiveYear.get()))))
+                                Collectors.maxBy(Comparator.comparingDouble(countryYearStats -> countryYearStats.gdp().doubleValue() / countryYearStats.population())),
+                                Optional::get)))
                 .values();
     }
 }
