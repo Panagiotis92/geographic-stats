@@ -1,5 +1,6 @@
 package com.pkoll.geographic_stats.endpoint;
 
+import com.pkoll.geographic_stats.dto.CountryProductivityDTO;
 import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
 import com.pkoll.geographic_stats.service.CountryService;
 import org.springframework.http.MediaType;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -27,5 +29,10 @@ public class CountryEndpoint {
     @GetMapping(value = "{countryCode2:[A-Z]{2}}/languages", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCountryLanguages(@PathVariable String countryCode2) {
         return countryService.getCountryLanguages(countryCode2);
+    }
+
+    @GetMapping(value = "most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Collection<CountryProductivityDTO> getMostProductiveYears() {
+        return countryService.findMostProductiveYears();
     }
 }

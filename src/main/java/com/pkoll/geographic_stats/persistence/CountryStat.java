@@ -53,4 +53,8 @@ public class CountryStat {
         this.gdp = gdp;
     }
 
+    public double getGdpPopulationRation() {
+        if (gdp == null || population == null || population == 0) return 0;
+        return gdp.doubleValue() / population;
+    }
 }
