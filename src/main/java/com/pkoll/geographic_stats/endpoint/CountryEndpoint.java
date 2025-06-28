@@ -1,6 +1,6 @@
 package com.pkoll.geographic_stats.endpoint;
 
-import com.pkoll.geographic_stats.dto.CountryProductivityDTO;
+import com.pkoll.geographic_stats.dto.CountryYearStatsDTO;
 import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
 import com.pkoll.geographic_stats.service.CountryService;
 import org.springframework.http.MediaType;
@@ -32,7 +32,7 @@ public class CountryEndpoint {
     }
 
     @GetMapping(value = "most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<CountryProductivityDTO> getMostProductiveYears() {
+    public Collection<CountryYearStatsDTO> getMostProductiveYears() {
         return countryService.findMostProductiveYears();
     }
 }
