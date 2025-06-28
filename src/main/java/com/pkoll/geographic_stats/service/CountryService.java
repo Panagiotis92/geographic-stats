@@ -40,7 +40,7 @@ public class CountryService {
                 .collect(Collectors.groupingBy(
                         CountryYearStatsDTO::countryCode3,
                         Collectors.collectingAndThen(
-                                Collectors.maxBy(Comparator.comparingDouble(countryYearStats -> countryYearStats.gdp().doubleValue() / countryYearStats.population())),
+                                Collectors.maxBy(Comparator.comparingDouble(CountryYearStatsDTO::calculateGdpPopulationRation)),
                                 Optional::get)))
                 .values();
     }
