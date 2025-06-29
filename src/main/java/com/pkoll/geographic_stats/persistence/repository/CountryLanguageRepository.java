@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CountryLanguageRepository extends JpaRepository<CountryLanguage, CountryLanguageId> {
-    @Query("SELECT cl.language.language FROM CountryLanguage cl WHERE cl.country.countryCode2 = ?1")
+    @Query("SELECT cl.language.language FROM CountryLanguage cl WHERE cl.country.countryCode2 = ?1 ORDER BY cl.language.language")
     public List<String> selectLanguagesByCountryCode2(String countryCode2);
 }
