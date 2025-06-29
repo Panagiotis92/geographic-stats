@@ -84,6 +84,8 @@ public class CountryService {
                 .join(country.region, region)
                 .join(region.continent, continent)
                 .where(predicate)
+                .offset(requestDTO.pageNumber())
+                .limit(requestDTO.pageSize())
                 .fetch();
     }
 }

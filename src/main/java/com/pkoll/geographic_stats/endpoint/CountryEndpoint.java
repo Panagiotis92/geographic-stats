@@ -5,6 +5,7 @@ import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
 import com.pkoll.geographic_stats.dto.CountryYearStatsSearchResponseDTO;
 import com.pkoll.geographic_stats.dto.CountyYearStatsSearchRequestDTO;
 import com.pkoll.geographic_stats.service.CountryService;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class CountryEndpoint {
     }
 
     @PostMapping(value = "search-year-stats", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<CountryYearStatsSearchResponseDTO> searchYearStats(@RequestBody CountyYearStatsSearchRequestDTO requestDTO) {
+    public List<CountryYearStatsSearchResponseDTO> searchYearStats(@RequestBody @Valid CountyYearStatsSearchRequestDTO requestDTO) {
         return countryService.searchYearStats(requestDTO);
     }
 }
