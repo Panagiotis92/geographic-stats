@@ -16,7 +16,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -39,17 +38,14 @@ public class CountryService {
         this.entityManager = entityManager;
     }
 
-    @Transactional
     public List<CountrySummaryDTO> getAll() {
         return countryRepository.selectSummaryOrderByNameAsc();
     }
 
-    @Transactional
     public List<String> getLanguages(String countryCode2) {
         return countryLanguageRepository.selectLanguagesByCountryCode2(countryCode2);
     }
 
-    @Transactional
     public Collection<CountryYearStatsDTO> findMostProductiveYears() {
         return countryStatsRepository.selectCountryYearStats()
                 .stream()
