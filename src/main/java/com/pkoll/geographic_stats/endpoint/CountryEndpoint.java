@@ -30,8 +30,8 @@ public class CountryEndpoint {
         return countryService.getLanguages(countryCode2);
     }
 
-    @GetMapping(value = "most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<CountryYearStatsDTO> getMostProductiveYears() {
+    @GetMapping(value = "find-most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Collection<CountryYearStatsDTO> findMostProductiveYears() {
         return countryService.findMostProductiveYears();
     }
 
