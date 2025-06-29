@@ -44,6 +44,13 @@ public class CountryService {
         return countryLanguageRepository.selectLanguagesByCountryCode2(countryCode2);
     }
 
+    /**
+     * Retrieves country stats from database.
+     * Groups them by country.
+     * For each group selects the country stat with maximum gdp per population ratio.
+     *
+     * @return {@link Collection<CountryYearStatsDTO>}
+     */
     public Collection<CountryYearStatsDTO> findMostProductiveYears() {
         return countryStatsRepository.selectCountryYearStats()
                 .stream()
@@ -55,6 +62,13 @@ public class CountryService {
                 .values();
     }
 
+    /**
+     * Creates query for country stats dynamically.
+     * Returns country stats results for selected page and total amount of results
+     *
+     * @param requestDTO {@link CountyYearStatsSearchRequestDTO}
+     * @return {@link CountryYearStatsSearchResponsePage}
+     */
     public CountryYearStatsSearchResponsePage searchYearStats(CountyYearStatsSearchRequestDTO requestDTO) {
         QCountryStats countryStats = QCountryStats.countryStats;
         QCountry country = QCountry.country;
