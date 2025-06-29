@@ -49,9 +49,9 @@ public class CountryService {
      * Groups them by country.
      * For each group selects the country stat with maximum gdp per population ratio.
      *
-     * @return {@link Collection<CountryYearStatsDTO>}
+     * @return {@link List<CountryYearStatsDTO>}
      */
-    public Collection<CountryYearStatsDTO> findMostProductiveYears() {
+    public List<CountryYearStatsDTO> findMostProductiveYears() {
         return countryStatsRepository.selectCountryYearStats()
                 .stream()
                 .collect(Collectors.groupingBy(
@@ -59,7 +59,10 @@ public class CountryService {
                         Collectors.collectingAndThen(
                                 Collectors.maxBy(Comparator.comparingDouble(CountryYearStatsDTO::calculateGdpPopulationRation)),
                                 Optional::get)))
-                .values();
+                .values()
+                .stream()
+                .sorted(Comparator.comparing(CountryYearStatsDTO::name))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     /**

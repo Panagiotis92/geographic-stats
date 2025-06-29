@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface CountryStatsRepository extends JpaRepository<CountryStats, CountryStatsId> {
-    @Query("SELECT cs.country.name, cs.country.countryCode3, cs.gdp, cs.id.year, cs.population from CountryStats cs")
+    @Query("SELECT cs.country.name, cs.country.countryCode3, cs.gdp, cs.id.year, cs.population FROM CountryStats cs")
     public List<CountryYearStatsDTO> selectCountryYearStats();
 }

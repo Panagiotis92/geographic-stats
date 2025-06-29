@@ -40,7 +40,7 @@ public class CountryEndpoint {
     @GetMapping(value = "most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Finds most productive years for each country")
     @ApiResponse(responseCode = "200", description = "Success")
-    public Collection<CountryYearStatsDTO> findMostProductiveYears() {
+    public List<CountryYearStatsDTO> findMostProductiveYears() {
         return countryService.findMostProductiveYears();
     }
 
