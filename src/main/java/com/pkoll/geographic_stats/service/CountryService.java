@@ -74,8 +74,8 @@ public class CountryService {
 
         List<CountryYearStatsSearchResponseDTO> results = new JPAQueryFactory(entityManager)
                 .select(Projections.constructor(CountryYearStatsSearchResponseDTO.class,
-                        country.name, country.countryCode3,
-                        countryStats.gdp, countryStats.id.year, countryStats.population,
+                        country.name, countryStats.gdp,
+                        countryStats.id.year, countryStats.population,
                         region.name, continent.name))
                 .from(countryStats)
                 .join(countryStats.country, country)

@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Integer> {
-    @Query("SELECT r.name from Region r")
+    @Query("SELECT r.name from Region r ORDER BY r.name ASC")
     public List<String> selectAll();
 }
