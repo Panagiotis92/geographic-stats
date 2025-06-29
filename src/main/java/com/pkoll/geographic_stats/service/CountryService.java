@@ -66,8 +66,8 @@ public class CountryService {
     }
 
     /**
-     * Creates query for country stats dynamically.
-     * Returns country stats results for selected page and total amount of results
+     * Creates and executes queries for countries stats dynamic search.
+     * Returns page results and total amount of results.
      *
      * @param requestDTO {@link CountyYearStatsSearchRequestDTO}
      * @return {@link CountryYearStatsSearchResponsePage}
