@@ -37,14 +37,14 @@ public class CountryEndpoint {
         return countryService.getLanguages(countryCode2);
     }
 
-    @GetMapping(value = "find-most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Finds most productive years for each country")
     @ApiResponse(responseCode = "200", description = "Success")
     public Collection<CountryYearStatsDTO> findMostProductiveYears() {
         return countryService.findMostProductiveYears();
     }
 
-    @PostMapping(value = "search-year-stats", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "year-stats-search", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Searches for countries year stats")
     @ApiResponse(responseCode = "200", description = "Success")
     @ApiResponse(responseCode = "400", description = "Not valid criteria", content = @Content)
