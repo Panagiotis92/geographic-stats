@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "country_stats")
-public class CountryStat {
+public class CountryStats {
     @EmbeddedId
-    private CountryStatId id;
+    private CountryStatsId id;
 
     @MapsId("countryId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -21,11 +21,11 @@ public class CountryStat {
     @Column(name = "gdp", precision = 15)
     private BigDecimal gdp;
 
-    public CountryStatId getId() {
+    public CountryStatsId getId() {
         return id;
     }
 
-    public void setId(CountryStatId id) {
+    public void setId(CountryStatsId id) {
         this.id = id;
     }
 

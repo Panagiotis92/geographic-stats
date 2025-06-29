@@ -1,27 +1,27 @@
 package com.pkoll.geographic_stats.service;
 
-import com.pkoll.geographic_stats.dto.CountryYearStatsSearchResponseDTO;
-import com.pkoll.geographic_stats.dto.CountryYearStatsDTO;
 import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
+import com.pkoll.geographic_stats.dto.CountryYearStatsDTO;
+import com.pkoll.geographic_stats.dto.CountryYearStatsSearchResponseDTO;
 import com.pkoll.geographic_stats.dto.CountyYearStatsSearchRequestDTO;
 import com.pkoll.geographic_stats.persistence.QContinent;
 import com.pkoll.geographic_stats.persistence.QCountry;
-import com.pkoll.geographic_stats.persistence.QCountryStat;
+import com.pkoll.geographic_stats.persistence.QCountryStats;
 import com.pkoll.geographic_stats.persistence.QRegion;
 import com.pkoll.geographic_stats.persistence.repository.CountryLanguageRepository;
 import com.pkoll.geographic_stats.persistence.repository.CountryRepository;
 import com.pkoll.geographic_stats.persistence.repository.CountryStatsRepository;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.ConstructorExpression;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,7 +62,7 @@ public class CountryService {
     }
 
     public List<CountryYearStatsSearchResponseDTO> search(CountyYearStatsSearchRequestDTO requestDTO) {
-        QCountryStat countryStat = QCountryStat.countryStat;
+        QCountryStats countryStats = QCountryStats.countryStats;
         QCountry country = QCountry.country;
         QRegion region = QRegion.region;
         QContinent continent = QContinent.continent;
@@ -72,19 +72,19 @@ public class CountryService {
             predicate.and(region.name.eq(requestDTO.region()));
         }
         if (requestDTO.yearFrom() != null) {
-            predicate.and(countryStat.id.year.goe(requestDTO.yearFrom()));
+            predicate.and(countryStats.id.year.goe(requestDTO.yearFrom()));
         }
         if (requestDTO.yearTo() != null) {
-            predicate.and(countryStat.id.year.loe(requestDTO.yearTo()));
+            predicate.and(countryStats.id.year.loe(requestDTO.yearTo()));
         }
 
         return new JPAQueryFactory(entityManager)
                 .select(Projections.constructor(CountryYearStatsSearchResponseDTO.class,
                                 country.name, country.countryCode3,
-                                countryStat.gdp, countryStat.id.year, countryStat.population,
+                                countryStats.gdp, countryStats.id.year, countryStats.population,
                                 region.name, continent.name))
-                .from(countryStat)
-                .join(countryStat.country, country)
+                .from(countryStats)
+                .join(countryStats.country, country)
                 .join(country.region, region)
                 .join(region.continent, continent)
                 .where(predicate)
