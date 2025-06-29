@@ -57,7 +57,7 @@ public class CountryService {
                 .values();
     }
 
-    public List<CountryYearStatsSearchResponseDTO> search(CountyYearStatsSearchRequestDTO requestDTO) {
+    public List<CountryYearStatsSearchResponseDTO> searchYearStats(CountyYearStatsSearchRequestDTO requestDTO) {
         QCountryStats countryStats = QCountryStats.countryStats;
         QCountry country = QCountry.country;
         QRegion region = QRegion.region;
