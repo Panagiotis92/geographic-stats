@@ -1,9 +1,6 @@
 package com.pkoll.geographic_stats.service;
 
-import com.pkoll.geographic_stats.dto.CountrySummaryDTO;
-import com.pkoll.geographic_stats.dto.CountryYearStatsDTO;
-import com.pkoll.geographic_stats.dto.CountryYearStatsSearchResponseDTO;
-import com.pkoll.geographic_stats.dto.CountyYearStatsSearchRequestDTO;
+import com.pkoll.geographic_stats.dto.*;
 import com.pkoll.geographic_stats.persistence.QContinent;
 import com.pkoll.geographic_stats.persistence.QCountry;
 import com.pkoll.geographic_stats.persistence.QCountryStats;
@@ -15,6 +12,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -57,7 +55,7 @@ public class CountryService {
                 .values();
     }
 
-    public List<CountryYearStatsSearchResponseDTO> searchYearStats(CountyYearStatsSearchRequestDTO requestDTO) {
+    public CountryYearStatsSearchResponsePage searchYearStats(CountyYearStatsSearchRequestDTO requestDTO) {
         QCountryStats countryStats = QCountryStats.countryStats;
         QCountry country = QCountry.country;
         QRegion region = QRegion.region;
@@ -74,18 +72,29 @@ public class CountryService {
             predicate.and(countryStats.id.year.loe(requestDTO.yearTo()));
         }
 
-        return new JPAQueryFactory(entityManager)
+        List<CountryYearStatsSearchResponseDTO> results = new JPAQueryFactory(entityManager)
                 .select(Projections.constructor(CountryYearStatsSearchResponseDTO.class,
-                                country.name, country.countryCode3,
-                                countryStats.gdp, countryStats.id.year, countryStats.population,
-                                region.name, continent.name))
+                        country.name, country.countryCode3,
+                        countryStats.gdp, countryStats.id.year, countryStats.population,
+                        region.name, continent.name))
                 .from(countryStats)
                 .join(countryStats.country, country)
                 .join(country.region, region)
                 .join(region.continent, continent)
                 .where(predicate)
-                .offset(requestDTO.pageNumber())
+                .orderBy(country.name.asc(), countryStats.id.year.asc())
+                .offset((requestDTO.pageNumber() - 1) * requestDTO.pageSize())
                 .limit(requestDTO.pageSize())
                 .fetch();
+
+        long totalAmount = new JPAQueryFactory(entityManager)
+                .select(countryStats.count())
+                .from(countryStats)
+                .join(countryStats.country, country)
+                .join(country.region, region)
+                .where(predicate)
+                .fetchOne();
+
+        return new CountryYearStatsSearchResponsePage(results, totalAmount);
     }
 }
