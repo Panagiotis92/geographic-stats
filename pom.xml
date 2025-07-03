@@ -14,7 +14,9 @@
     <name>geographic_stats</name>
 
     <developers>
-        <developer>Panos Kollias</developer>
+        <developer>
+            <name>Panos Kollias</name>
+        </developer>
     </developers>
 
     <properties>
