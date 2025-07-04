@@ -3,6 +3,7 @@
   Requirements:
   <ul>
     <li>JDK 21 or later</li>
+    <li>Apache Maven 3.9.9</li>
     <li>MySQL database</li>
   </ul>
 </p>
