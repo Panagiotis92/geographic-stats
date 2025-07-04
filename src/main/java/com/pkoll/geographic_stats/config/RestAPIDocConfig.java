@@ -18,7 +18,7 @@ public class RestAPIDocConfig {
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("Geographic Stats")
-                        .description("A REST API for geographical statistics")
+                        .description("A REST API for geographic statistics")
                         .version("v0.0.1"));
     }
 }
