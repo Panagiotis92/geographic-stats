@@ -10,7 +10,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -24,7 +23,7 @@ public class CountryEndpoint {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(description = "Returns all countries ordered by name ascending")
+    @Operation(description = "Returns all countries")
     @ApiResponse(responseCode = "200", description = "Success")
     public List<CountrySummaryDTO> getAll() {
         return countryService.getAll();
@@ -37,11 +36,11 @@ public class CountryEndpoint {
         return countryService.getLanguages(countryCode2);
     }
 
-    @GetMapping(value = "most-productive-years", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(description = "Finds most productive years for each country")
+    @GetMapping(value = "most-productive-year", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Finds most productive year for each country")
     @ApiResponse(responseCode = "200", description = "Success")
-    public List<CountryYearStatsDTO> findMostProductiveYears() {
-        return countryService.findMostProductiveYears();
+    public List<CountryYearStatsDTO> findMostProductiveYear() {
+        return countryService.findMostProductiveYear();
     }
 
     @PostMapping(value = "year-stats-search", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

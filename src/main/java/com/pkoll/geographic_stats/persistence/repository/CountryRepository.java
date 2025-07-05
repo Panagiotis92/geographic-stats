@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Integer> {
     @Query("SELECT c.name, c.area, c.countryCode2 FROM Country c ORDER BY c.name ASC")
-    public List<CountrySummaryDTO> selectSummaryOrderByNameAsc();
+    public List<CountrySummaryDTO> selectSummary();
 }

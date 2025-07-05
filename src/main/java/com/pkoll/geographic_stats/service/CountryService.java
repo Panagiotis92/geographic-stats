@@ -12,10 +12,8 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +35,7 @@ public class CountryService {
     }
 
     public List<CountrySummaryDTO> getAll() {
-        return countryRepository.selectSummaryOrderByNameAsc();
+        return countryRepository.selectSummary();
     }
 
     public List<String> getLanguages(String countryCode2) {
@@ -45,14 +43,14 @@ public class CountryService {
     }
 
     /**
-     * Retrieves country stats from database.
+     * Retrieves year stats from database.
      * Groups them by country.
-     * For each group selects the country stat with maximum gdp per population ratio.
+     * For each group selects the year stats with maximum gdp per population ratio.
      *
      * @return {@link List<CountryYearStatsDTO>}
      */
-    public List<CountryYearStatsDTO> findMostProductiveYears() {
-        return countryStatsRepository.selectCountryYearStats()
+    public List<CountryYearStatsDTO> findMostProductiveYear() {
+        return countryStatsRepository.selectAll()
                 .stream()
                 .collect(Collectors.groupingBy(
                         CountryYearStatsDTO::countryCode3,
@@ -66,7 +64,7 @@ public class CountryService {
     }
 
     /**
-     * Creates and executes queries for countries stats dynamic search.
+     * Creates and executes queries for year stats dynamic search.
      * Returns page results and total amount of results.
      *
      * @param requestDTO {@link CountyYearStatsSearchRequestDTO}
