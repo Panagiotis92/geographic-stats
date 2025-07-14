@@ -12,6 +12,8 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -49,6 +51,7 @@ public class CountryService {
      *
      * @return {@link List<CountryYearStatsDTO>}
      */
+    @Cacheable("mostProductiveYear")
     public List<CountryYearStatsDTO> findMostProductiveYear() {
         return countryStatsRepository.selectAll()
                 .stream()
